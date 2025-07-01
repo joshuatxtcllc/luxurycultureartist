@@ -69,6 +69,84 @@
             color: #d4af37;
         }
 
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #d4af37;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.98);
+            z-index: 999;
+            padding-top: 80px;
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .mobile-menu ul li {
+            margin: 2rem 0;
+        }
+
+        .mobile-menu ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            display: block;
+            padding: 1rem;
+        }
+
+        .mobile-menu ul li a:hover {
+            color: #d4af37;
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #d4af37;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
         /* Hero Section */
         .hero {
             min-height: 100vh;
@@ -576,6 +654,7 @@
             width: 90%;
             max-width: 600px;
             position: relative;
+            color: #fff;
         }
 
         .close {
@@ -594,6 +673,10 @@
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
+            }
+
+            .hamburger {
+                display: flex;
             }
 
             .hero-content {
@@ -618,6 +701,41 @@
                 height: 150px;
                 font-size: 2rem;
             }
+
+            .hero-badges {
+                flex-direction: column;
+                gap: 10px;
+                align-items: center;
+            }
+
+            .product-showcase {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .credentials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .collaboration-tools {
+                padding: 2rem 1rem;
+            }
+
+            .partnership-form {
+                padding: 2rem 1rem;
+            }
+
+            .hero {
+                padding-top: 80px;
+            }
+
+            .section {
+                padding: 3rem 0;
+            }
         }
     </style>
 </head>
@@ -633,8 +751,25 @@
                 <li><a href="#collaborations">Collaborations</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <div class="hamburger" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </nav>
     </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-close" onclick="toggleMobileMenu()">&times;</div>
+        <ul>
+            <li><a href="#home" onclick="closeMobileMenu()">Home</a></li>
+            <li><a href="#credentials" onclick="closeMobileMenu()">Credentials</a></li>
+            <li><a href="#portfolio" onclick="closeMobileMenu()">Portfolio</a></li>
+            <li><a href="#collaborations" onclick="closeMobileMenu()">Collaborations</a></li>
+            <li><a href="#contact" onclick="closeMobileMenu()">Contact</a></li>
+        </ul>
+    </div>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
@@ -881,4 +1016,416 @@
                     <div class="form-group">
                         <label class="form-label">Collaboration Type</label>
                         <select class="form-select" id="collaborationType" onchange="calculateValue()">
-                            <option value="">Select
+                            <option value="">Select Collaboration Type</option>
+                            <option value="limited">Limited Edition (100-500 pieces)</option>
+                            <option value="exclusive">Exclusive Collection (50-100 pieces)</option>
+                            <option value="signature">Signature Series (25-50 pieces)</option>
+                            <option value="bespoke">Bespoke/One-of-a-Kind</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Market Positioning</label>
+                        <select class="form-select" id="marketPosition" onchange="calculateValue()">
+                            <option value="">Select Market Position</option>
+                            <option value="luxury">Luxury Market</option>
+                            <option value="ultra">Ultra-Luxury Market</option>
+                            <option value="bespoke">Bespoke/Custom Market</option>
+                        </select>
+                    </div>
+
+                    <div class="value-display" id="valueDisplay" style="display: none;">
+                        <div class="value-amount" id="valueAmount">$0</div>
+                        <div class="value-desc" id="valueDesc">Select options above to calculate collaboration value</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partnership Form -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">Partnership Inquiries</h2>
+            <p style="text-align: center; color: #ccc; font-size: 1.2rem; margin-bottom: 3rem;">
+                Ready to collaborate with a government-validated extraordinary artist? Let's create something extraordinary together.
+            </p>
+
+            <div class="partnership-form">
+                <h3 style="color: #d4af37; text-align: center; margin-bottom: 2rem; font-size: 1.8rem;">Exclusive Partnership Application</h3>
+                
+                <form id="partnershipForm" onsubmit="submitForm(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Company Name *</label>
+                            <input type="text" class="form-input" id="companyName" required placeholder="Your luxury brand name">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Contact Person *</label>
+                            <input type="text" class="form-input" id="contactPerson" required placeholder="Your name">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Email Address *</label>
+                            <input type="email" class="form-input" id="email" required placeholder="your@email.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Phone Number</label>
+                            <input type="tel" class="form-input" id="phone" placeholder="+1 (555) 123-4567">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Partnership Type *</label>
+                            <select class="form-select" id="partnershipType" required>
+                                <option value="">Select Partnership Type</option>
+                                <option value="fashion">Fashion Collaboration</option>
+                                <option value="furniture">Furniture Design</option>
+                                <option value="jewelry">Jewelry Collection</option>
+                                <option value="accessories">Luxury Accessories</option>
+                                <option value="art">Art Installation/Gallery</option>
+                                <option value="licensing">Art Licensing</option>
+                                <option value="custom">Custom Project</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Project Budget Range</label>
+                            <select class="form-select" id="budget">
+                                <option value="">Select Budget Range</option>
+                                <option value="100k-500k">$100K - $500K</option>
+                                <option value="500k-1m">$500K - $1M</option>
+                                <option value="1m-5m">$1M - $5M</option>
+                                <option value="5m+">$5M+</option>
+                                <option value="discuss">Prefer to Discuss</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Project Description *</label>
+                        <textarea class="form-textarea" id="projectDescription" required placeholder="Describe your collaboration vision, target market, and how Dr. Ahmed Farid's extraordinary artistic credentials can elevate your brand..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Timeline</label>
+                        <select class="form-select" id="timeline">
+                            <option value="">Select Timeline</option>
+                            <option value="immediate">Immediate (1-3 months)</option>
+                            <option value="quarter">This Quarter (3-6 months)</option>
+                            <option value="year">This Year (6-12 months)</option>
+                            <option value="planning">Long-term Planning (12+ months)</option>
+                        </select>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button type="submit" class="submit-button">Submit Partnership Inquiry</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Dr. Ahmed Farid</h3>
+                    <p>EB-1A Extraordinary Ability Artist</p>
+                    <p>UN Goodwill Ambassador</p>
+                    <p>Netflix Featured Actor</p>
+                    <p>International Philanthropist</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Contact Information</h3>
+                    <p>Email: partnerships@ahmedfarid.com</p>
+                    <p>Phone: +1 (555) 123-4567</p>
+                    <p>Location: New York, NY | Cairo, Egypt</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Professional Networks</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link" title="LinkedIn">💼</a>
+                        <a href="#" class="social-link" title="Instagram">📸</a>
+                        <a href="#" class="social-link" title="Professional Portfolio">🎨</a>
+                        <a href="#" class="social-link" title="UN Profile">🌍</a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="border-top: 1px solid #d4af37; padding-top: 2rem; margin-top: 2rem; text-align: center; color: #ccc;">
+                <p>&copy; 2024 Dr. Ahmed Farid. All rights reserved. | Government-Validated Extraordinary Talent | Available for Luxury Brand Collaborations</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div id="portfolioModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle" style="color: #d4af37; margin-bottom: 1rem;"></h2>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize the website functionality
+        (function() {
+            "use strict";
+
+            // Product base values for calculation
+            var productValues = {
+                handbags: { base: 25000, multiplier: 2.5 },
+                timepieces: { base: 50000, multiplier: 3.0 },
+                furniture: { base: 35000, multiplier: 2.2 },
+                jewelry: { base: 75000, multiplier: 3.5 },
+                couture: { base: 85000, multiplier: 4.0 },
+                accessories: { base: 15000, multiplier: 2.0 }
+            };
+
+            var collaborationMultipliers = {
+                limited: 1.5,
+                exclusive: 2.0,
+                signature: 2.5,
+                bespoke: 3.0
+            };
+
+            var marketMultipliers = {
+                luxury: 1.0,
+                ultra: 1.5,
+                bespoke: 2.0
+            };
+
+            // Value Calculator Function
+            window.calculateValue = function() {
+                try {
+                    const productCategory = document.getElementById('productCategory').value;
+                    const collaborationType = document.getElementById('collaborationType').value;
+                    const marketPosition = document.getElementById('marketPosition').value;
+                    
+                    const valueDisplay = document.getElementById('valueDisplay');
+                    const valueAmount = document.getElementById('valueAmount');
+                    const valueDesc = document.getElementById('valueDesc');
+
+                    if (!productCategory || !collaborationType || !marketPosition) {
+                        valueDisplay.style.display = 'none';
+                        return;
+                    }
+
+                    const product = productValues[productCategory];
+                    const collabMultiplier = collaborationMultipliers[collaborationType];
+                    const marketMultiplier = marketMultipliers[marketPosition];
+                    
+                    // EB-1A Prestige Bonus: 25% additional value
+                    const eb1aBonus = 1.25;
+                    
+                    const finalValue = Math.round(product.base * product.multiplier * collabMultiplier * marketMultiplier * eb1aBonus);
+                    
+                    valueAmount.textContent = ' + finalValue.toLocaleString();
+                    valueDesc.textContent = `Estimated collaboration value including EB-1A prestige bonus (+25%)`;
+                    valueDisplay.style.display = 'block';
+                } catch (error) {
+                    console.error('Calculation error:', error);
+                }
+            };
+
+            // Portfolio Modal Functions
+            window.openModal = function(portfolioType) {
+                try {
+                    var modal = document.getElementById("portfolioModal");
+                    var modalTitle = document.getElementById("modalTitle");
+                    var modalContent = document.getElementById("modalContent");
+                    
+                    var portfolioData = {
+                        "Contemporary Abstracts": {
+                            title: "Contemporary Abstract Collection",
+                            content: '<p style="color: #ccc; margin-bottom: 1rem;">Bold geometric forms and cultural symbolism representing the intersection of Eastern and Western artistic traditions.</p><h4 style="color: #d4af37; margin: 1rem 0;">Collaboration Opportunities:</h4><ul style="color: #ccc; margin-left: 1rem;"><li>Luxury handbag patterns and textures</li><li>High-end interior design elements</li><li>Limited edition fashion prints</li><li>Exclusive wallpaper and textile designs</li></ul><p style="color: #d4af37; margin-top: 1rem; font-weight: bold;">Government validation ensures authenticity and prestige for your brand partnership.</p>'
+                        },
+                        "Cultural Fusion": {
+                            title: "Cultural Fusion Series",
+                            content: '<p style="color: #ccc; margin-bottom: 1rem;">Egyptian heritage meets contemporary design, perfect for luxury brands seeking authentic cultural collaboration.</p><h4 style="color: #d4af37; margin: 1rem 0;">Heritage Applications:</h4><ul style="color: #ccc; margin-left: 1rem;"><li>Diplomatic gift collections</li><li>Cultural heritage luxury goods</li><li>Museum-quality limited editions</li><li>International exhibition pieces</li></ul><p style="color: #d4af37; margin-top: 1rem; font-weight: bold;">UN Goodwill Ambassador status adds diplomatic prestige to collaborations.</p>'
+                        },
+                        "Luxury Applications": {
+                            title: "Luxury Brand Applications",
+                            content: '<p style="color: #ccc; margin-bottom: 1rem;">Designs specifically created for high-end fashion, furniture, and luxury goods collaboration projects.</p><h4 style="color: #d4af37; margin: 1rem 0;">Premium Applications:</h4><ul style="color: #ccc; margin-left: 1rem;"><li>Haute couture fashion elements</li><li>Luxury furniture upholstery and inlays</li><li>Premium accessory designs</li><li>Exclusive packaging and branding</li></ul><p style="color: #d4af37; margin-top: 1rem; font-weight: bold;">EB-1A extraordinary ability certification guarantees top-tier artistic quality.</p>'
+                        },
+                        "Diplomatic Art": {
+                            title: "Diplomatic Art Collection",
+                            content: '<p style="color: #ccc; margin-bottom: 1rem;">Pieces created for international diplomatic events and cultural exchange programs.</p><h4 style="color: #d4af37; margin: 1rem 0;">Diplomatic Prestige:</h4><ul style="color: #ccc; margin-left: 1rem;"><li>United Nations official events</li><li>International cultural exchanges</li><li>Embassy and consulate displays</li><li>High-profile diplomatic gifts</li></ul><p style="color: #d4af37; margin-top: 1rem; font-weight: bold;">Official UN Goodwill Ambassador credentials provide unmatched diplomatic authenticity.</p>'
+                        },
+                        "Film & Entertainment": {
+                            title: "Film & Entertainment Works",
+                            content: '<p style="color: #ccc; margin-bottom: 1rem;">Artistic works featured in international film and entertainment productions, including Netflix projects.</p><h4 style="color: #d4af37; margin: 1rem 0;">Entertainment Industry Recognition:</h4><ul style="color: #ccc; margin-left: 1rem;"><li>Netflix featured productions</li><li>International film festivals</li><li>Celebrity endorsements and collections</li><li>Entertainment industry collaborations</li></ul><p style="color: #d4af37; margin-top: 1rem; font-weight: bold;">Netflix recognition provides global entertainment industry credibility.</p>'
+                        },
+                        "Medical Art": {
+                            title: "Medical & Healing Arts",
+                            content: '<p style="color: #ccc; margin-bottom: 1rem;">Unique intersection of medical knowledge and artistic expression, creating healing-focused luxury designs.</p><h4 style="color: #d4af37; margin: 1rem 0;">Wellness Applications:</h4><ul style="color: #ccc; margin-left: 1rem;"><li>Therapeutic design elements</li><li>Wellness-focused luxury products</li><li>Medical facility artistic installations</li><li>Health-conscious brand collaborations</li></ul><p style="color: #d4af37; margin-top: 1rem; font-weight: bold;">Medical Doctor credentials add scientific authenticity to wellness-focused collaborations.</p>'
+                        }
+                    };
+                    
+                    var data = portfolioData[portfolioType];
+                    if (data) {
+                        modalTitle.textContent = data.title;
+                        modalContent.innerHTML = data.content;
+                        modal.style.display = "block";
+                    }
+                } catch (error) {
+                    console.error("Modal error:", error);
+                }
+            };
+
+            window.closeModal = function() {
+                try {
+                    var modal = document.getElementById("portfolioModal");
+                    modal.style.display = "none";
+                } catch (error) {
+                    console.error("Close modal error:", error);
+                }
+            };
+
+            // Product Collaboration Showcase
+            window.showCollaboration = function(productType) {
+                try {
+                    const collaborationInfo = {
+                        'Luxury Handbags': 'Perfect canvas for Dr. Ahmed Farid\'s cultural fusion designs. EB-1A validation ensures authentic luxury positioning. Estimated collaboration value: $50,000 - $150,000 per limited edition.',
+                        'Swiss Timepieces': 'Exclusive dial designs featuring diplomatic artistry. UN Ambassador status adds prestige to luxury timepiece collaborations. Estimated value: $75,000 - $300,000 per collection.',
+                        'Designer Furniture': 'Artistic elements for high-end furniture pieces. Medical background brings healing design philosophy. Estimated collaboration value: $60,000 - $200,000 per collection.',
+                        'Fine Jewelry': 'Cultural symbolism in luxury jewelry design. Government validation guarantees authenticity. Estimated value: $100,000 - $500,000 per exclusive series.',
+                        'Haute Couture': 'Fashion-forward designs with diplomatic prestige. Netflix recognition adds entertainment industry appeal. Estimated value: $125,000 - $400,000 per fashion line.',
+                        'Luxury Accessories': 'Elegant accessory designs with cultural significance. Philanthropic background aligns with socially conscious luxury brands. Estimated value: $40,000 - $120,000 per collection.'
+                    };
+                    
+                    const info = collaborationInfo[productType];
+                    if (info) {
+                        alert(`${productType} Collaboration:\n\n${info}\n\nReady to explore this partnership? Contact us through the partnership form below.`);
+                    }
+                } catch (error) {
+                    console.error('Collaboration showcase error:', error);
+                }
+            };
+
+            // Mobile Menu Functions
+            window.toggleMobileMenu = function() {
+                try {
+                    const hamburger = document.querySelector('.hamburger');
+                    const mobileMenu = document.getElementById('mobileMenu');
+                    
+                    hamburger.classList.toggle('active');
+                    mobileMenu.classList.toggle('active');
+                    
+                    // Prevent body scroll when menu is open
+                    if (mobileMenu.classList.contains('active')) {
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        document.body.style.overflow = 'auto';
+                    }
+                } catch (error) {
+                    console.error('Mobile menu toggle error:', error);
+                }
+            };
+
+            window.closeMobileMenu = function() {
+                try {
+                    const hamburger = document.querySelector('.hamburger');
+                    const mobileMenu = document.getElementById('mobileMenu');
+                    
+                    hamburger.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                } catch (error) {
+                    console.error('Mobile menu close error:', error);
+                }
+            };
+            window.submitForm = function(event) {
+                try {
+                    event.preventDefault();
+                    
+                    const formData = {
+                        companyName: document.getElementById('companyName').value,
+                        contactPerson: document.getElementById('contactPerson').value,
+                        email: document.getElementById('email').value,
+                        phone: document.getElementById('phone').value,
+                        partnershipType: document.getElementById('partnershipType').value,
+                        budget: document.getElementById('budget').value,
+                        projectDescription: document.getElementById('projectDescription').value,
+                        timeline: document.getElementById('timeline').value
+                    };
+                    
+                    // In a real implementation, this would send to a backend server
+                    alert(`Thank you ${formData.contactPerson}!\n\nYour partnership inquiry for ${formData.companyName} has been received.\n\nDr. Ahmed Farid's team will contact you within 24-48 hours to discuss your ${formData.partnershipType} collaboration.\n\nAs an EB-1A extraordinary ability recipient and UN Goodwill Ambassador, Dr. Farid looks forward to creating something extraordinary with your luxury brand.`);
+                    
+                    // Reset form
+                    document.getElementById('partnershipForm').reset();
+                } catch (error) {
+                    console.error('Form submission error:', error);
+                    alert('Thank you for your interest! Please try again or contact us directly at partnerships@ahmedfarid.com');
+                }
+            };
+
+            // Smooth scrolling for navigation links
+            function initSmoothScrolling() {
+                try {
+                    const links = document.querySelectorAll('a[href^="#"]');
+                    links.forEach(link => {
+                        link.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            const targetId = this.getAttribute('href').substring(1);
+                            const targetElement = document.getElementById(targetId);
+                            if (targetElement) {
+                                targetElement.scrollIntoView({
+                                    behavior: 'smooth',
+                                    block: 'start'
+                                });
+                            }
+                        });
+                    });
+                } catch (error) {
+                    console.error('Smooth scrolling error:', error);
+                }
+            }
+
+            // Close modal when clicking outside
+            function initModalClose() {
+                try {
+                    window.addEventListener('click', function(event) {
+                        const modal = document.getElementById('portfolioModal');
+                        if (event.target === modal) {
+                            modal.style.display = 'none';
+                        }
+                    });
+                } catch (error) {
+                    console.error('Modal close listener error:', error);
+                }
+            }
+
+            // Initialize all functionality when page loads
+            function initialize() {
+                try {
+                    initSmoothScrolling();
+                    initModalClose();
+                    console.log('Ahmed Farid Portfolio Website initialized successfully');
+                } catch (error) {
+                    console.error('Initialization error:', error);
+                }
+            }
+
+            // Multiple initialization strategies to ensure functionality works
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initialize);
+            } else {
+                initialize();
+            }
+
+            // Backup initialization
+            setTimeout(initialize, 100);
+            setTimeout(initialize, 500);
+            setTimeout(initialize, 1000);
+
+        })();
+    </script>
+</body>
+</html>
